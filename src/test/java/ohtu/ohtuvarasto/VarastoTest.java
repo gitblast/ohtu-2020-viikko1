@@ -65,4 +65,87 @@ public class VarastoTest {
         assertEquals(4, varasto.paljonkoMahtuu(), vertailuTarkkuus);
     }
 
+    @Test
+    public void konstruktoriInvalidiValue() {
+        Varasto v = new Varasto(-1);
+
+        assertEquals(0.0, v.getTilavuus(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void konstruktoriAlkuSaldoinvalid() {
+        Varasto v = new Varasto(-1, 1);
+
+        assertEquals(0.0, v.getTilavuus(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void konstruktoriAlkuSaldoValid() {
+        Varasto v = new Varasto(1.0, 1);
+
+        assertEquals(1.0, v.getTilavuus(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void konstruktoriAlkuSaldoValidiSaldo() {
+        Varasto v = new Varasto(5, 3);
+
+        assertEquals(3, v.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void konstruktoriAlkuSaldoInvalidiSaldo() {
+        Varasto v = new Varasto(5, -1);
+
+        assertEquals(0.0, v.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void konstruktoriAlkuSaldoOverflowSaldo() {
+        Varasto v = new Varasto(5, 10);
+
+        assertEquals(5.0, v.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void lisaaInvalid() {
+        varasto.lisaaVarastoon(-1);
+
+        assertEquals(10, varasto.paljonkoMahtuu(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void lisaaOverflow() {
+        varasto.lisaaVarastoon(15);
+
+        assertEquals(0, varasto.paljonkoMahtuu(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void invalidOtto() {
+
+        double d = varasto.otaVarastosta(-1);
+
+        assertEquals(0, d, vertailuTarkkuus);
+
+        assertEquals(10, varasto.paljonkoMahtuu(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void overiOtto() {
+        varasto.lisaaVarastoon(5);
+
+        double d = varasto.otaVarastosta(10);
+
+        assertEquals(5, d, vertailuTarkkuus);
+
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void tostringgi() {
+        String s = varasto.toString();
+
+        assertEquals("saldo = 0.0, vielä tilaa 10.0", s);
+    }
 }
