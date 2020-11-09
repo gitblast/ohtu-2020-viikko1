@@ -8,6 +8,12 @@ public class Main {
 
         Varasto mehua = new Varasto(100.0);
         Varasto olutta = new Varasto(100.0, 20.2);
+
+        if (true) {
+          if (true) {
+            
+          }
+        }
     }
 }
 
